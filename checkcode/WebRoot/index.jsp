@@ -22,6 +22,7 @@
 <script type="text/javascript">
 	function reloadCode() {
 		var time = new Date().getTime();
+		// 给URL传递参数可以清空浏览器的缓存，让浏览器认为这是一个新的请求
 		document.getElementById("imagecode").src = "<%=request.getContextPath()%>/servlet/ImageServlet?d=" + time;
 	}
 </script>
