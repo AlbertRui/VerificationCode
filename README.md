@@ -53,44 +53,7 @@
 </div>
 <p>　　验证的流程如下：</p>
 <p><img src="https://images0.cnblogs.com/blog2015/698228/201505/081902260797835.jpg" alt="" /></p>
-<p>　　生成验证码的ImageServlet：</p>
-<div class="cnblogs_code">
-<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">static</span> Random r = <span style="color: #0000ff;">new</span><span style="color: #000000;"> Random();
-</span><span style="color: #008080;"> 2</span>     <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">char</span>[] chs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"<span style="color: #000000;">.toCharArray();
-</span><span style="color: #008080;"> 3</span>     <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">final</span> <span style="color: #0000ff;">int</span> NUMBER_OF_CHS = 4<span style="color: #000000;">;
-</span><span style="color: #008080;"> 4</span>     <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">final</span> <span style="color: #0000ff;">int</span> IMG_WIDTH = 65<span style="color: #000000;">;
-</span><span style="color: #008080;"> 5</span>     <span style="color: #0000ff;">private</span> <span style="color: #0000ff;">static</span> <span style="color: #0000ff;">final</span> <span style="color: #0000ff;">int</span> IMG_HEIGHT = 25<span style="color: #000000;">;
-</span><span style="color: #008080;"> 6</span>     
-<span style="color: #008080;"> 7</span>     
-<span style="color: #008080;"> 8</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> doGet(HttpServletRequest request, HttpServletResponse response)
-</span><span style="color: #008080;"> 9</span>             <span style="color: #0000ff;">throws</span><span style="color: #000000;"> ServletException, IOException {
-</span><span style="color: #008080;">10</span> 
-<span style="color: #008080;">11</span>             BufferedImage image = <span style="color: #0000ff;">new</span> BufferedImage(IMG_WIDTH, IMG_HEIGHT, BufferedImage.TYPE_INT_RGB);    <span style="color: #008000;">//</span><span style="color: #008000;"> 实例化BufferedImage</span>
-<span style="color: #008080;">12</span>             Graphics g =<span style="color: #000000;"> image.getGraphics();
-</span><span style="color: #008080;">13</span>             Color c = <span style="color: #0000ff;">new</span> Color(200, 200, 255);                                             <span style="color: #008000;">//</span><span style="color: #008000;"> 验证码图片的背景颜色                                        </span>
-<span style="color: #008080;">14</span> <span style="color: #000000;">            g.setColor(c);
-</span><span style="color: #008080;">15</span>             g.fillRect(0, 0, IMG_WIDTH, IMG_HEIGHT);                                        <span style="color: #008000;">//</span><span style="color: #008000;"> 图片的边框</span>
-<span style="color: #008080;">16</span>             
-<span style="color: #008080;">17</span>             StringBuffer sb = <span style="color: #0000ff;">new</span> StringBuffer();                                           <span style="color: #008000;">//</span><span style="color: #008000;"> 用于保存验证码字符串</span>
-<span style="color: #008080;">18</span>             <span style="color: #0000ff;">int</span> index;                                                                      <span style="color: #008000;">//</span><span style="color: #008000;"> 数组的下标</span>
-<span style="color: #008080;">19</span>             <span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">int</span> i = 0; i &lt; NUMBER_OF_CHS; i++<span style="color: #000000;">) {
-</span><span style="color: #008080;">20</span>                 index = r.nextInt(chs.length);                                              <span style="color: #008000;">//</span><span style="color: #008000;"> 随机一个下标</span>
-<span style="color: #008080;">21</span>                 g.setColor(<span style="color: #0000ff;">new</span> Color(r.nextInt(88), r.nextInt(210), r.nextInt(150)));       <span style="color: #008000;">//</span><span style="color: #008000;"> 随机一个颜色</span>
-<span style="color: #008080;">22</span>                 g.drawString(chs[index] + "", 15 * i + 3, 18);                              <span style="color: #008000;">//</span><span style="color: #008000;"> 画出字符</span>
-<span style="color: #008080;">23</span>                 sb.append(chs[index]);                                                      <span style="color: #008000;">//</span><span style="color: #008000;"> 验证码字符串</span>
-<span style="color: #008080;">24</span> <span style="color: #000000;">            }
-</span><span style="color: #008080;">25</span>             
-<span style="color: #008080;">26</span>             request.getSession().setAttribute("piccode", sb.toString());                    <span style="color: #008000;">//</span><span style="color: #008000;"> 将验证码字符串保存到session中</span>
-<span style="color: #008080;">27</span>             ImageIO.write(image, "jpg", response.getOutputStream());                        <span style="color: #008000;">//</span><span style="color: #008000;"> 向页面输出图像</span>
-<span style="color: #008080;">28</span> <span style="color: #000000;">    }
-</span><span style="color: #008080;">29</span> 
-<span style="color: #008080;">30</span>     <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">void</span><span style="color: #000000;"> doPost(HttpServletRequest request, HttpServletResponse response)
-</span><span style="color: #008080;">31</span>             <span style="color: #0000ff;">throws</span><span style="color: #000000;"> ServletException, IOException {
-</span><span style="color: #008080;">32</span> <span style="color: #000000;">        doGet(request, response);
-</span><span style="color: #008080;">33</span> <span style="color: #000000;">    }
-</span><span style="color: #008080;">34</span> 
-<span style="color: #008080;">35</span> }</pre>
-</div>
+
 <p>　　进行验证码图片验证的Servlet：</p>
 <div class="cnblogs_code">
 <pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">class</span> ValidateImageServlet <span style="color: #0000ff;">extends</span><span style="color: #000000;"> HttpServlet {
@@ -536,72 +499,5 @@
 <div class="clear"></div>
 <div id="post_next_prev"></div>
 </div>
-
-
-		</div>
-		<div class = "postDesc">posted @ <span id="post-date">2015-05-21 19:34</span> <a href='http://www.cnblogs.com/happyfans/'>夜已殇</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=4486010" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(4486010);return false;">收藏</a></div>
-	</div>
-	<script type="text/javascript">var allowComments=true,cb_blogId=212385,cb_entryId=4486010,cb_blogApp=currentBlogApp,cb_blogUserGuid='0b5704e6-7977-e411-b908-9dcfd8948a71',cb_entryCreatedDate='2015/5/21 19:34:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
-	
-</div><!--end: topics 文章、评论容器-->
-</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
-<div id='comment_form' class='commentform'>
-<a name='commentform'></a>
-<div id='divCommentShow'></div>
-<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
-<div id='comment_form_container'></div>
-<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
-<div id='ad_t2'></div>
-<div id='opt_under_post'></div>
-<div id='cnblogs_c1' class='c_ad_block'></div>
-<div id='under_post_news'></div>
-<div id='cnblogs_c2' class='c_ad_block'></div>
-<div id='under_post_kb'></div>
-<div id='HistoryToday' class='c_ad_block'></div>
-<script type='text/javascript'>
-    fixPostBody();
-    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
-    deliverAdT2();
-    deliverAdC1();
-    deliverAdC2();    
-    loadNewsAndKb();
-    loadBlogSignature();
-    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
-    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
-    loadOptUnderPost();
-    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
-</script>
-</div>
-
-
-	</div><!--end: forFlow -->
-	</div><!--end: mainContent 主体内容容器-->
-
-	<div id="sideBar">
-		<div id="sideBarMain">
-			
-<!--done-->
-<div class="newsItem">
-<h3 class="catListTitle">公告</h3>
-	<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
-</div>
-
-			<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
-			
-			<div id="leftcontentcontainer">
-				<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
-			</div>
-			
-		</div><!--end: sideBarMain -->
-	</div><!--end: sideBar 侧边栏容器 -->
-	<div class="clear"></div>
-	</div><!--end: main -->
-	<div class="clear"></div>
-	<div id="footer">
-		
-<!--done-->
-Copyright &copy;2018 夜已殇
-	</div><!--end: footer -->
-</div><!--end: home 自定义的最大容器 -->
 </body>
 </html>
