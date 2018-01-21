@@ -63,7 +63,7 @@
 <h2>kaptcha：</h2>
 <p>　　它是可以配置的，也可以生成各种样式的验证码。如下是其生成效果：</p>
 <p>　　<img src="https://images0.cnblogs.com/blog2015/698228/201505/211124161826846.jpg" alt="" />  <img src="https://images0.cnblogs.com/blog2015/698228/201505/211220024329477.jpg" alt="" /></p>
-<h2>　　中文验证码</h2>
+<h2>中文验证码</h2>
 <p>　　查看前面的配置发现验证码字符的生成主要依靠的是kaptcha.textproducer.impl这个文本实现类，查看com.google.code.kaptcha.text.impl.DefaultTextCreator的源码，发现了它继承自&nbsp;Configurable并实现了TextProducer接口。我们可以仿照它自定义我们自己的验证码中的文本生成器：</p>
 <p>　　只需要在web.xml中将初始化参数由默认的文本实现类改成我们自己的实现类：</p>
 <div class="cnblogs_code">
@@ -74,7 +74,7 @@
 <span style="color: #008080;">5</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">init-param</span><span style="color: #0000ff;">&gt;</span></pre>
 </div>
 <p><img src="https://images0.cnblogs.com/blog2015/698228/201505/211834526047918.jpg" alt="" /></p>
-<h2>　　算式验证码</h2>
+<h2>算式验证码</h2>
 <p>实现步骤如下：</p>
 <ul>
 <li>获取随机的数值将结果相加</li>
