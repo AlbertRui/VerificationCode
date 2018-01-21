@@ -58,19 +58,12 @@
 <h2>　　Jcaptcha：</h2>
 <p>　　一个用来生成图形验证码的开源组件，可以产生多种形式的验证码。可以与Spring组合使用。需要导入的jar包如下：</p>
 <p><img src="https://images0.cnblogs.com/blog2015/698228/201505/202219064942839.jpg" alt="" /></p>
-<p>　　用于展示验证码的auth_code_captcha.jsp如下：</p>
-<div class="cnblogs_code">
-<pre><span style="color: #008080;">1</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">form </span><span style="color: #ff0000;">action</span><span style="color: #0000ff;">="submit.action"</span><span style="color: #ff0000;"> method</span><span style="color: #0000ff;">="post"</span><span style="color: #0000ff;">&gt;</span>
-<span style="color: #008080;">2</span>      <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">img </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="jcaptcha.jpg"</span> <span style="color: #0000ff;">/&gt;</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="text"</span><span style="color: #ff0000;"> name</span><span style="color: #0000ff;">="japtcha"</span><span style="color: #ff0000;"> value</span><span style="color: #0000ff;">=""</span> <span style="color: #0000ff;">/&gt;</span>
-<span style="color: #008080;">3</span>      <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">input </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="submit"</span><span style="color: #0000ff;">/&gt;</span>
-<span style="color: #008080;">4</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">form</span><span style="color: #0000ff;">&gt;</span></pre>
-</div>
+<P>	最终生成的验证码的效果如下：  </p>
 <p>　　<img src="https://images0.cnblogs.com/blog2015/698228/201505/202230533546820.jpg" alt="" /></p>
 <h2>　　kaptcha：</h2>
-<p>　　它是可以配置的，也可以生成各种样式的验证码。如下是其简单应用：</p>
+<p>　　它是可以配置的，也可以生成各种样式的验证码。如下是其生成效果：</p>
 <p>　　<img src="https://images0.cnblogs.com/blog2015/698228/201505/211124161826846.jpg" alt="" /></p>
-<h2>Kaptcha的详细配置</h2>
-<p><img src="https://images0.cnblogs.com/blog2015/698228/201505/211220024329477.jpg" alt="" /></p>
+<p>    <img src="https://images0.cnblogs.com/blog2015/698228/201505/211220024329477.jpg" alt="" /></p>
 <h2>　　中文验证码</h2>
 <p>　　查看前面的配置发现验证码字符的生成主要依靠的是kaptcha.textproducer.impl这个文本实现类，查看com.google.code.kaptcha.text.impl.DefaultTextCreator的源码，发现了它继承自&nbsp;Configurable并实现了TextProducer接口。我们可以仿照它自定义我们自己的验证码中的文本生成器：</p>
 <p>　　只需要在web.xml中将初始化参数由默认的文本实现类改成我们自己的实现类：</p>
