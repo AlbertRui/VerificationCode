@@ -55,12 +55,12 @@
 <p><img src="https://images0.cnblogs.com/blog2015/698228/201505/081902260797835.jpg" alt="" /></p>
 <h1>&nbsp;开源组件实现验证码</h1>
 <p><img src="https://images0.cnblogs.com/blog2015/698228/201505/082211353456538.jpg" alt="" /></p>
-<h2>　　Jcaptcha：</h2>
+<h2>Jcaptcha：</h2>
 <p>　　一个用来生成图形验证码的开源组件，可以产生多种形式的验证码。可以与Spring组合使用。需要导入的jar包如下：</p>
-<p>&nbsp;&nbsp;<img src="https://images0.cnblogs.com/blog2015/698228/201505/202219064942839.jpg" alt="" /></p>
-<P>&nbsp;&nbsp;最终生成的验证码的效果如下：  </p>
+<p>&nbsp;&nbsp;&nbsp;<img src="https://images0.cnblogs.com/blog2015/698228/201505/202219064942839.jpg" alt="" /></p>
+<P>&nbsp;&nbsp;&nbsp;最终生成的验证码的效果如下：  </p>
 <p>　　<img src="https://images0.cnblogs.com/blog2015/698228/201505/202230533546820.jpg" alt="" /></p>
-<h2>　　kaptcha：</h2>
+<h2>kaptcha：</h2>
 <p>　　它是可以配置的，也可以生成各种样式的验证码。如下是其生成效果：</p>
 <p>　　<img src="https://images0.cnblogs.com/blog2015/698228/201505/211124161826846.jpg" alt="" />  <img src="https://images0.cnblogs.com/blog2015/698228/201505/211220024329477.jpg" alt="" /></p>
 <h2>　　中文验证码</h2>
