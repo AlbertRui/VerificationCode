@@ -6,6 +6,7 @@
 ## Photoshop实现验证码
 * 该方法是实现逻辑最简单的，但效率、安全性极其不高
 ### 实现效果
+
 ![image](images/001.png)
 
 ### 实现步骤：
@@ -17,6 +18,7 @@
 * 缺憾就是制作验证码图片的过程太费时，实现方法极low，极不推荐这样实现，下面的方法将越来越高效美观相对安全。
 ## 基于Javaweb实现验证码
 * 这里讲Java Web，Servlet下的验证码实现，实现起来逻辑还是很清晰的。
+
 ![image](images/002.png)
 
 * 省去较简单的实现代码，我们先从前台关键代码说起,当我们点击"看不清"时，验证码图片会进行一个刷新，会调用一个JavaScript函数用于重新设置图片路径来更换图片，请看下面代码，代码中<%=request.getContextPath()%>是为了解决相对路径的问题，可返回站点的根路径，而/servlet/ImageServlet是一个整体，指向的就是ImageServlet这个servlet，为什么要在之前加个/servlet呢，因为我们在web.xml中做了配置映射，可理解为换了个更长的名称。接着看下面JavaScript函数，可能有些人会有疑问，为什么获取一个当前时间然后加在路径最后呢，其实这是为了解决浏览器缓存的问题，就是当触发了ImageServlet后虽然验证码图片换了但缓存还没变显示出来的验证码图片不变的问题，借助每时每刻时间不同可以让浏览器缓存失效。
@@ -40,7 +42,9 @@
 </servlet-mapping>
 ```
 * 然后我们看关键的ImageServlet是怎么生成图片的：
+
 ![image](images/003.png)
+
 ```xml
 <servlet>
     <servlet-name>ImageServlet</servlet-name>
@@ -66,6 +70,7 @@
 ![image](images/004.png)
 
 ## 开源组件Jcaptcha实现验证码
+
 ![image](images/005.png)
 
 ### 实现简介
@@ -125,6 +130,7 @@ public class SubmitActionServlet extends HttpServlet {
 </html>
 ```
 ### 实现图例
+
 ![image](images/006.png)
 
 ## 开源组件kaptcha实现验证码
@@ -177,11 +183,13 @@ public class SubmitActionServlet extends HttpServlet {
 </html>
 ```
 ### 实现图例
+
 ![image](images/007.png)
 
 * 可以发现我们的验证码变得越来越来丰富多彩了，但是还停留在一个只验证英文字母和数字的阶段，那么还能不能玩点高端的呢，答案是肯定的。接下来我们来看一下中文验证码和算术运算验证码怎么实现。都只需基于以上kaptcha的使用进行修改即可。
 
 ### 中文验证码的实现
+
 ![image](images/008.png)
 
 * 首先我们找到kaptcha.jar包下有个DefaultTextCreator.class字节码文件，顾名思义，他是来产生验证码中文本的一个类，我们可以通过自己实现一个继承于他的类，并通过配置来使用自己的实现类来使验证码中的文本变为中文。经过如下反编译后得到的类我们可以看到其是那样实现的，其中的getText()函数用于产生getConfig()配置器将要渲染的验证码文本，所以我们只需继承配置类并实现文本产生接口后重写getText()方法即可。
@@ -211,9 +219,12 @@ public String getText() {
 </init-param>
 ```
 #### 实现图例
+
 ![image](images/009.png)
+
 ### 算数运算验证码的实现
 * 和上述中文验证码相同，我们需要通过继承类和接口来实现自己的类，并改写其中的函数，然后通过改配置信息来使组件调用自己实现的类从而实现验证码形式的多样化。
+
 ![image](images/010.png)
 
 * KaptchaServlet字节码文件经过反编译后的代码如下：
@@ -278,7 +289,9 @@ public class KaptchaServlet extends HttpServlet implements Servlet {
 <servlet-class>KaptchaServlet</servlet-class>
 ```
 #### 实现图例
+
 ![image](images/011.png)
+
 ## 总结
 * 这里只是简单实现了验证码，但要用到商业项目上还是远远不够的，验证码想要不被破解还要加上各种加密算法，即使这样，也可以随处搜索到某某验证码被破解的情况。在网络上有一个地下数据库，里面存储的是我们的个人信息，那些信息都是一条条整理好的，这十分可怕，但这样一个数据库是客观存在的，验证码作为保护账户密码的重要一环，已变得越来越不安全，因为个人信息的泄露，别人掌握了你足够的信息就可以对你实行诈骗，其中验证码是重要一环，近日就有一毕业生被骗取验证码后，几个小时内所有财富都被转走的事件发生。所以请保护好你的验证码，不要轻易泄露给他人。
 * 当然我们也不会坐以待毙，目前的验证码种类繁多也越来越难以破解，像语音识别、面部识别这些都是耳熟能详的就不多说了。
